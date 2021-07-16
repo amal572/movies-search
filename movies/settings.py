@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-vcmde-)gud@*z^v(6)-eod@mz!tox^_s0=!06cb52%c5%9q4gb
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['baraa.usol.ca']
+ALLOWED_HOSTS = ['baraa.usol.ca', 'localhost']
 
 
 # Application definition
@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'interact',
     'review',
     'search',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -56,7 +57,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
+
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'movies.urls'
 
