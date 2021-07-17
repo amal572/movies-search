@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
-import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +25,7 @@ SECRET_KEY = 'django-insecure-vcmde-)gud@*z^v(6)-eod@mz!tox^_s0=!06cb52%c5%9q4gb
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['baraa.usol.ca', 'localhost']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -46,7 +45,8 @@ INSTALLED_APPS = [
     'interact',
     'review',
     'search',
-    'corsheaders',
+    'origin',
+    'categoriesfilm',
 ]
 
 MIDDLEWARE = [
@@ -57,12 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
 ]
-
-
-CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'movies.urls'
 
@@ -91,11 +86,11 @@ WSGI_APPLICATION = 'movies.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'movies',
-        'HOST': '52.31.64.177',
-        'PORT': '2508',
-        'USER': 'baraa',
-        'PASSWORD': 'baraa',
+        'NAME': 'test3',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+        'USER': 'root',
+        'PASSWORD': '',
     }
 }
 
@@ -147,5 +142,3 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-STATIC_ROOT = os.path.join(BASE_DIR, "static/")

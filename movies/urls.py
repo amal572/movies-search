@@ -27,4 +27,6 @@ urlpatterns = [
     path('search/', include('search.url')),
     path('director/', include('director.url')),
     path('actorfilm/', include('actorfilm.url')),
+    path('origin/', include('origin.url')),
+    path('categoriesfilm/', include('categoriesfilm.url')),
 ]
