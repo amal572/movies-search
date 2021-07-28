@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-vcmde-)gud@*z^v(6)-eod@mz!tox^_s0=!06cb52%c5%9q4gb
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['baraa.usol.ca']
 
 
 # Application definition
