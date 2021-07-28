@@ -40,3 +40,19 @@ class ChangePasswordView(generics.UpdateAPIView):
     queryset = User.objects.all()
     permission_classes = (IsAuthenticated,)
     serializer_class = ChangePasswordSerializer
+    #@detail_route(methods='PUT')
+#    def perform_update(self, serializer):
+#        try:
+#            if request.method == "PUT":
+#                 serializer.save(user=self.request.user.id)
+#        except film.DoesNotExist:
+#            return Response(status=status.HTTP_404_NOT_FOUND)
+       
+    
+class personalInfo(APIView):
+    def get(self, request):
+        token = request.META.get('HTTP_AUTHORIZATION', " ").split(' ')[1]
+        data = request.data 
+        user={'id':request.user.id,'username':request.user.username,'email':request.user.email}
+        return Response(user)
+#      

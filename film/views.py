@@ -6,6 +6,7 @@ from .models import *
 from director.serializers import DirectorOneSerializer
 from categories.serializers import categoriesOneSerializer
 from actors.serializers import actorsOnSerializers
+from origin.serializers import originOnSerializers
 from film.models import categories,actors,Director
 # Create your views here.
 
@@ -42,9 +43,18 @@ class FilmViewDetail(APIView):
 
 class FilmCategories(APIView):
     def get(self, request, pk):
-        movies = categories.objects.filter(categories=pk)
+        movies = film.objects.get(id=pk)
         print(movies)
-        serializers =categoriesOneSerializer(movies,many=True)
+        mov = movies.categorie.all()
+        print(mov)
+        serializers = categoriesOneSerializer(mov, many=True)
+        return Response(serializers.data)
+
+class FilmOrigin(APIView):
+    def get(self, request, pk):
+        movies = origin.objects.filter(origin=pk)
+        print(movies)
+        serializers =originOnSerializers(movies,many=True)
         return Response(serializers.data)
 
 class FilmDirector(APIView):

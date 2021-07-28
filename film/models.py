@@ -17,21 +17,25 @@ class Director(models.Model):
 class actors(models.Model):
     name = models.CharField(max_length=40)
 
+class origin(models.Model):
+    name = models.CharField(max_length=30)
+
 class film(models.Model):
     title = models.CharField(max_length=50, validators=[validate_slug])
     director = models.ForeignKey(Director, related_name='director', on_delete=models.CASCADE)
+    origins = models.ForeignKey(origin, related_name='origin', on_delete=models.CASCADE)
     actor = models.ManyToManyField(actors, through='acotors_film')
     review = models.ManyToManyField(User, through='review_of_film', related_name='review_of_film')
     interact = models.ManyToManyField(User, through='like_un_like_film', related_name='like_un_like_film')
     search = models.ManyToManyField(User, through='search_history', related_name='search_history')
-    production_company = models.CharField(max_length=60)
+    categorie = models.ManyToManyField(categories, through='categories_film', related_name='categories_film')
+    production_company = models.CharField(max_length=60,null=True)
     description = models.CharField(max_length=9000)
     release_date = models.DateField(auto_now_add=True)
     run_time = models.IntegerField()
-    spoken_language = models.CharField(max_length=50)
+    spoken_language = models.CharField(max_length=50,null=True)
     rate = models.IntegerField()
     link_of_film = models.CharField(max_length=200,null=True)
-    categorie = models.ForeignKey(categories, related_name='categories', on_delete=models.CASCADE)
 
 class review_of_film(models.Model):
     users = models.ForeignKey(User, related_name='nameUser', on_delete=models.CASCADE)
@@ -54,3 +58,6 @@ class acotors_film(models.Model):
       films = models.ForeignKey(film, related_name='films', on_delete=models.CASCADE)
       actors = models.ForeignKey(actors, related_name='actor', on_delete=models.CASCADE)
 
+class categories_film(models.Model):
+    films = models.ForeignKey(film, related_name='filmsCategories', on_delete=models.CASCADE)
+    categori = models.ForeignKey(categories, related_name='categori', on_delete=models.CASCADE)

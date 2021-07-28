@@ -24,6 +24,24 @@ class ReviewView(APIView):
             serializer_class = ReviewSerializers(movies, many=True)
             return Response(serializer_class.data)
 
+class Add(APIView):
+    permission_classes = [IsAuthenticated]
+    def post(self, request):
+        try:
+            token = request.META.get('HTTP_AUTHORIZATION', " ").split(' ')[1]
+            data = request.data
+            data['users'] = request.user.id
+            serializer = ReviewSerializers(data=data)
+            if serializer.is_valid():
+                serializer.save()
+            return Response(serializer.data)
+        except ObjectDoesNotExist as e:
+            return Response({'error': str(e)}, safe=False, status=status.HTTP_404_NOT_FOUND)
+        except Exception:
+            return JsonResponse({'error': 'Something terrible went wrong'}, safe=False,
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
 class ReviewAdd(APIView):
     permission_classes = [IsAuthenticated]
     def post(self, request):
