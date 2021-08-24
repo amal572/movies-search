@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import FiimView, FilmViewDetail, FilmAdd, FilmUpdate, FilmDelete,FilmCategories,FilmDirector,FilmActors,FilmReview,FilmSearch,FilmOrigin
+from .views import FiimView, FilmViewDetail, FilmAdd, FilmUpdate, FilmDelete,FilmCategories,FilmDirector,FilmActors,FilmReview,FilmSearch,FilmOrigin,FilmAddToDatabase
 from . import views
 
 urlpatterns = [
@@ -15,4 +15,5 @@ urlpatterns = [
    path('update/<str:pk>/', FilmUpdate.as_view()),
    path('delete/<str:pk>/', FilmDelete.as_view()),
    path('getFilm/<str:pk>/', FilmCategories.as_view()),
+   path('add-to-database/', FilmAddToDatabase.as_view()),
 ]

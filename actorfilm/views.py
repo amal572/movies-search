@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from .serializers import *
 from .models import *
-from film.models import categories_film
+from film.models import acotors_film
 from film.serializers import FilmSerializer,FilmOneSerializer,FilmTilte
 from film.models import actors
 # Create your views here.

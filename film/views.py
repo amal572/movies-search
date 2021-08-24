@@ -18,7 +18,7 @@ from rest_framework import status
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
 from django.db import connection
-
+import csv
 class FiimView(APIView):
     def get(self, request):
         try:
@@ -138,7 +138,17 @@ class FilmDelete(APIView):
             return Response({'error': 'Something went wrong'}, safe=False, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-
+class FilmAddToDatabase(APIView):
+    def get(self, request):
+        try:
+            with open('example_file.csv') as csvfile:
+                reader = csv.DictReader(csvfile)
+                for row in reader:
+                    return Response(row)
+        except ObjectDoesNotExist as e:
+            return Response({'error': str(e)}, safe=False, status=status.HTTP_404_NOT_FOUND)
+        except Exception:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 

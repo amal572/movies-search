@@ -22,11 +22,13 @@ class RegisterView(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         if (serializer.is_valid()):
            user = serializer.save()
-        #username = request.data['username']
-        #password = request.data['password']
-        #user = User(username=username)
-        #user.set_password(password)
-        #user.save()
+#        id = '1236'
+#        username = 'abd'
+#        email = 'abd@gmail.com'
+#        password = request.data['password']
+#        user = User(id=id,username=username,email=email)
+#        user.set_password(password)
+#        user.save()
         refresh = RefreshToken.for_user(user)
         return JsonResponse(
             {
