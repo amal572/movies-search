@@ -141,7 +141,7 @@ class FilmDelete(APIView):
 class FilmAddToDatabase(APIView):
     def get(self, request):
         try:
-           
+            print('')           
         except ObjectDoesNotExist as e:
             return Response({'error': str(e)}, safe=False, status=status.HTTP_404_NOT_FOUND)
         except Exception:
