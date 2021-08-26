@@ -144,18 +144,10 @@ class FilmAddToDatabase(APIView):
         try:
             data=request.data
             
-            origins_id=0
-            if origin.objects.filter(name=data['origins']).count()==0:
-                o = origin(name=data['origins'])
-                o.save()
-                origins_id=o.id
-            else:
-                o = origin.objects.filter(name=data['origins']).values_list('id', flat=True)[0]
-                origins_id=o   
-            data['origins']=origins_id
+           
             serializer = FilmSerializer(data=data)
             if serializer.is_valid():
-                serializer.save() 
+                serializer.save()
 
             return Response('ok')
             
