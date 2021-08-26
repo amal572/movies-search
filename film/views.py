@@ -139,16 +139,24 @@ class FilmDelete(APIView):
 
 
 class FilmAddToDatabase(APIView):
-    def get(self, request):
+    def post(self, request, format=None):
         try:
-            print('')           
+            data=request.data
+            origins_id=0
+            if origin.objects.filter(name=data['origins']).count()==0:
+                o = origin(name=data['origins'])
+                o.save()
+                data['origins']=o.id
+            else:
+                o = origin.objects.filter(name=data['origins']).values_list('id', flat=True)[0]
+                data['origins']=o           
+            serializer = FilmSerializer(data=data)
+            if serializer.is_valid():
+                serializer.save() 
+
+            return Response(serializer)
+            
         except ObjectDoesNotExist as e:
             return Response({'error': str(e)}, safe=False, status=status.HTTP_404_NOT_FOUND)
         except Exception:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-
-
-
-
