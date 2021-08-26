@@ -148,16 +148,16 @@ class FilmAddToDatabase(APIView):
             if origin.objects.filter(name=data['origins']).count()==0:
                 o = origin(name=data['origins'])
                 o.save()
-#                data['origins']=o.id
+                origins_id=o.id
             else:
                 o = origin.objects.filter(name=data['origins']).values_list('id', flat=True)[0]
-#                data['origins']=o   
-            data['origins']=1
+                origins_id=o   
+            data['origins']=origins_id
             serializer = FilmSerializer(data=data)
             if serializer.is_valid():
                 serializer.save() 
 
-            return Response(serializer)
+            return Response('ok')
             
         except ObjectDoesNotExist as e:
             return Response({'error': str(e)}, safe=False, status=status.HTTP_404_NOT_FOUND)
