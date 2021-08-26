@@ -7,7 +7,7 @@ from director.serializers import DirectorOneSerializer
 from categories.serializers import categoriesOneSerializer
 from actors.serializers import actorsOnSerializers
 from origin.serializers import originOnSerializers
-from film.models import categories,actors,Director,origin
+from film.models import categories,actors,Director
 # Create your views here.
 
 from rest_framework.views import APIView
@@ -138,49 +138,13 @@ class FilmDelete(APIView):
             return Response({'error': 'Something went wrong'}, safe=False, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-# class FilmAddToDatabase(APIView):
-#     def post(self, request, format=None):
-#         try:
-#             data=request.data
-#             origins_id=0
-#             if origin.objects.filter(name=data['origins']).count()==0:
-#                 o = origin(name=data['origins'])
-#                 o.save()
-#                 data['origins']=o.id
-#             else:
-#                 o = origin.objects.filter(name=data['origins']).values_list('id', flat=True)[0]
-#                 data['origins']=o           
-#             serializer = FilmSerializer(data=data)
-#             if serializer.is_valid():
-#                 serializer.save() 
-
-#             return Response(serializer)
-            
-#         except ObjectDoesNotExist as e:
-#             return Response({'error': str(e)}, safe=False, status=status.HTTP_404_NOT_FOUND)
-#         except Exception:
-#             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 class FilmAddToDatabase(APIView):
-    def post(self, request, format=None):
+    def get(self, request):
         try:
-            data=request.data
-            
-            origins_id=0
-            if origin.objects.filter(name=data['origins']).count()==0:
-                o = origin(name=data['origins'])
-                o.save()
-                data['origins']=o.id
-            else:
-                o = origin.objects.filter(name=data['origins']).values_list('id', flat=True)[0]
-                data['origins']=o   
-            return Response(data)
-            serializer = FilmSerializer(data=data)
-            if serializer.is_valid():
-                serializer.save() 
-
-            return Response(serializer)
-            
+            with open('example_file.csv') as csvfile:
+                reader = csv.DictReader(csvfile)
+                for row in reader:
+                    return Response(row)
         except ObjectDoesNotExist as e:
             return Response({'error': str(e)}, safe=False, status=status.HTTP_404_NOT_FOUND)
         except Exception:
