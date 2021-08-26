@@ -7,7 +7,7 @@ from director.serializers import DirectorOneSerializer
 from categories.serializers import categoriesOneSerializer
 from actors.serializers import actorsOnSerializers
 from origin.serializers import originOnSerializers
-from film.models import categories,actors,Director
+from film.models import categories,actors,Director,origin
 # Create your views here.
 
 from rest_framework.views import APIView
