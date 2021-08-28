@@ -21,19 +21,19 @@ class origin(models.Model):
     name = models.CharField(max_length=30)
 
 class film(models.Model):
-    title = models.CharField(max_length=50, validators=[validate_slug])
+    title = models.CharField(max_length=150)
     origins = models.ForeignKey(origin, related_name='origin', on_delete=models.CASCADE)
     review = models.ManyToManyField(User, through='review_of_film', related_name='review_of_film')
     interact = models.ManyToManyField(User, through='like_un_like_film', related_name='like_un_like_film')
     search = models.ManyToManyField(User, through='search_history', related_name='search_history')
     categorie = models.ManyToManyField(categories, through='categories_film', related_name='categories_film')
     actor = models.ManyToManyField(actors, through='acotors_film')
-    production_company = models.CharField(max_length=60,null=True)
-    description = models.CharField(max_length=9000)
+    production_company = models.CharField(max_length=150,null=True)
+    description = models.TextField()
     release_date = models.DateField(auto_now_add=True)
-    run_time = models.IntegerField()
+    run_time = models.FloatField()
     spoken_language = models.CharField(max_length=50,null=True)
-    rate = models.IntegerField()
+    rate = models.FloatField()
     link_of_film = models.CharField(max_length=200,null=True)
 
 class categories_film(models.Model):
@@ -48,12 +48,12 @@ class review_of_film(models.Model):
     users = models.ForeignKey(User, related_name='nameUser', on_delete=models.CASCADE)
     films = models.ForeignKey(film, related_name="namefileUser", on_delete=models.CASCADE)
     times_tamp = models.DateField(null=True)
-    precent_rate = models.IntegerField()
+    precent_rate = models.FloatField()
 
 class search_history(models.Model):
     users = models.ForeignKey(User,related_name='search',on_delete=models.CASCADE)
     films = models.ForeignKey(film, related_name="searchuser", on_delete=models.CASCADE)
-    Text = models.CharField(max_length=9000)
+    Text = models.TextField()
     chosen_or_not = models.IntegerField()
 
 class like_un_like_film(models.Model):
