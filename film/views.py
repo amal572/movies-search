@@ -7,7 +7,7 @@ from director.serializers import DirectorOneSerializer
 from categories.serializers import categoriesOneSerializer
 from actors.serializers import actorsOnSerializers
 from origin.serializers import originOnSerializers
-from film.models import categories,actors,Director,origin
+from film.models import categories,actors,Director,origin,categories_film
 
 # Create your views here.
 
@@ -78,11 +78,8 @@ class FilmActors(APIView):
 
 class FilmReview(APIView):
     def get(self, request, pk):
-        #print(pk)
         movies = film.objects.get(id=pk)
-        print(movies)
         mov = movies.review.through.objects.all()
-        print(mov)
         serializers = FilmReviewSerializers(mov , many=True)
         return Response(serializers.data)
 
@@ -97,17 +94,24 @@ class FilmSearch(APIView):
         return Response(serializers.data)
 
 class FilmAdd(APIView):
-    permission_classes = [IsAdminUser]
+#    permission_classes = [IsAdminUser]
     def post(self, request, format=None):
         try:
-           serializer = FilmSerializer(data=request.data)
-           if serializer.is_valid():
-               serializer.save()
-               return Response(serializer.data, status=status.HTTP_201_CREATED)
+            
+            serializer = FilmSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                for x in request.data['categorie']:
+                    obj=  categories_film(films=film.objects.get(id=serializer.data['id']),categori=categories.objects.get(id=x))
+                    obj.save()
+                for y in request.data['actor']:
+                    obj1=  acotors_film(films=film.objects.get(id=serializer.data['id']),actors=actors.objects.get(id=y))
+                    obj1.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
         except ObjectDoesNotExist as e:
             return Response({'error': str(e)}, safe=False, status=status.HTTP_404_NOT_FOUND)
-        except Exception:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class FilmUpdate(APIView):
@@ -118,6 +122,12 @@ class FilmUpdate(APIView):
             serializer = FilmSerializer(instance=movies, data=request.data)
             if serializer.is_valid():
                 serializer.save()
+                for x in request.data['categorie']:
+                    obj=  categories_film(films=film.objects.get(id=serializer.data['id']),categori=categories.objects.get(id=x))
+                    obj.save()
+                for y in request.data['actor']:
+                    obj1=  acotors_film(films=film.objects.get(id=serializer.data['id']),actors=actors.objects.get(id=y))
+                    obj1.save()
             return Response(serializer.data)
         except ObjectDoesNotExist as e:
             return Response({'error': str(e)}, safe=False, status=status.HTTP_404_NOT_FOUND)
@@ -151,11 +161,42 @@ class FilmAddToDatabase(APIView):
             else:
                 o = origin.objects.filter(name=data['origins']).values_list('id', flat=True)[0]
                 data['origins']=o   
-           
+            
+             
+            dataCategorie=[]
+            for x in request.data['categorie']:
+                if categories.objects.filter(name=x).count()==0:
+                    o = categories(name=x)
+                    o.save()
+                    dataCategorie.append(o.id)
+                else:
+                    o = categories.objects.filter(name=x).values_list('id', flat=True)[0]
+                    dataCategorie.append(o)
+                    
+
+                    
+            dataActors=[]        
+            for y in request.data['actor']:
+                if actors.objects.filter(name=y).count()==0:
+                    o = actors(name=y)
+                    o.save()
+                    dataActors.append(o.id)
+                else:
+                    o = actors.objects.filter(name=y).values_list('id', flat=True)[0]
+                    dataActors.append(o)
+                
+
+                    
+                   
             serializer = FilmSerializer(data=data)
             if serializer.is_valid():
                 serializer.save()
-
+            for x in dataCategorie:
+                obj=  categories_film(films=film.objects.get(id=serializer.data['id']),categori=categories.objects.get(id=x))
+                obj.save()
+            for y in dataActors:
+                obj1=  acotors_film(films=film.objects.get(id=serializer.data['id']),actors=actors.objects.get(id=y))
+                obj1.save()
             return Response('ok')
             
         except ObjectDoesNotExist as e:
