@@ -162,7 +162,7 @@ class FilmAddToDatabase(APIView):
                 o = origin.objects.filter(name=data['origins']).values_list('id', flat=True)[0]
                 data['origins']=o   
             
-             
+            
             dataCategorie=[]
             for x in request.data['categorie']:
                 if categories.objects.filter(name=x).count()==0:
@@ -174,7 +174,7 @@ class FilmAddToDatabase(APIView):
                     dataCategorie.append(o)
                     
 
-                    
+               
             dataActors=[]        
             for y in request.data['actor']:
                 if actors.objects.filter(name=y).count()==0:
@@ -184,8 +184,17 @@ class FilmAddToDatabase(APIView):
                 else:
                     o = actors.objects.filter(name=y).values_list('id', flat=True)[0]
                     dataActors.append(o)
-                
-
+            
+            dataDirector=[]        
+            for d in request.data['Director']:
+                if Director.objects.filter(name=d).count()==0:
+                    o = Director(name=d)
+                    o.save()
+                    dataDirector.append(o.id)
+                else:
+                    o = Director.objects.filter(name=d).values_list('id', flat=True)[0]
+                    dataDirector.append(o)
+            
                     
                    
             serializer = FilmSerializer(data=data)
@@ -196,6 +205,9 @@ class FilmAddToDatabase(APIView):
                 obj.save()
             for y in dataActors:
                 obj1=  acotors_film(films=film.objects.get(id=serializer.data['id']),actors=actors.objects.get(id=y))
+                obj1.save()
+            for d in dataDirector:
+                obj1=  director_film(films=film.objects.get(id=serializer.data['id']),Directors=Director.objects.get(id=d))
                 obj1.save()
             return Response('ok')
             
