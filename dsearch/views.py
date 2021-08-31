@@ -23,7 +23,7 @@ from sentence_transformers import SentenceTransformer
 import json
 
 def getmoviedef():
-    movies = pd.read_csv('movies.csv')
+    movies = pd.read_csv('example_file.csv')
     #df2 = movies[["movieId","Release Year","Title" ,"Origin/Ethnicity" ,"Director","Cast","Genre","Plot"]]
     df = movies[['Title','Plot']]
     return df
