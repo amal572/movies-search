@@ -84,10 +84,16 @@ def finallsearch(query):
 
 class searchApi(APIView):
     def get(self, request):
+        query = "فيلم أكشن قائم على الذكاء الاصطناعي"
         #movies = pd.read_csv('example_file.csv')
         #print(movies)
-        ranked_results = finallsearch('فيلم أكشن قائم على الذكاء الاصطناعي')
+        #ranked_results = finallsearch('فيلم أكشن قائم على الذكاء الاصطناعي')
+        resfinal = translatorsearch1(query)
+        model = SentenceTransformer('msmarco-distilbert-base-dot-prod-v3')
+        index = faiss.deserialize_index(np.load("test.npy"))
+        print(index)
+        results = search(resfinal, top_k=5, index=index, model=model)
         #ranked_results_bert = sorted(ranked_results, key=lambda x: x['Score'], reverse=True)
-        Maxfilm = list(ranked_results)
+        Maxfilm = list(results)
         newMax = json.dumps(Maxfilm)
         return Response(newMax)
