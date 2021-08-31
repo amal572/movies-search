@@ -15,14 +15,9 @@ import csv
 # Create your views here.
 import time
 import faiss
-from tqdm import tqdm
-import seaborn as sns
 import numpy as np
 import pandas as pd
-from textblob import TextBlob
-import matplotlib.pyplot as plt
 from bert_score import score
-import googletrans
 from googletrans import Translator
 from sentence_transformers import SentenceTransformer
 import json
