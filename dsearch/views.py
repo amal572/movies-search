@@ -83,10 +83,10 @@ def finallsearch(query):
 
 
 class searchApi(APIView):
-    def get(self, request,pk):
+    def get(self, request):
         #movies = pd.read_csv('example_file.csv')
         #print(movies)
-        ranked_results = finallsearch(pk)
+        ranked_results = finallsearch('فيلم أكشن قائم على الذكاء الاصطناعي')
         #ranked_results_bert = sorted(ranked_results, key=lambda x: x['Score'], reverse=True)
         Maxfilm = list(ranked_results)
         newMax = json.dumps(Maxfilm)
