@@ -66,9 +66,13 @@ def translatorsearch1(query):
 
 
 def finallsearch(query):
+    print(1)
     resfinal = translatorsearch1(query)
+    print(2)
     model = SentenceTransformer('msmarco-distilbert-base-dot-prod-v3')
+    print(3)
     index = faiss.deserialize_index(np.load("test.npy"))
+    print(4)
     results = search(resfinal, top_k=5, index=index, model=model)
     ranked_results_bert = []
     ref = [resfinal]
