@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'Recomender',
     'corsheaders',
     'background_task',
+    'dsearch'
 ]
 
 MIDDLEWARE = [
