@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'categoriesfilm',
     'Recommender',
     'corsheaders',
+    'background_task',
 ]
 
 MIDDLEWARE = [
