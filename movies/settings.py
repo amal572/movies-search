@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'origin',
     'categoriesfilm',
     'corsheaders',
+    'background_task',
 ]
 
 MIDDLEWARE = [
