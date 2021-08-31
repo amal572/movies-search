@@ -14,12 +14,12 @@ from django.db import connection
 import csv
 # Create your views here.
 import time
-#import faiss
+import faiss
 import numpy as np
 import pandas as pd
 import pickle
 #from bert_score import score
-#from googletrans import Translator
+from googletrans import Translator
 from sentence_transformers import SentenceTransformer
 import json
 
@@ -47,40 +47,39 @@ def search(query, top_k, index, model):
     return results
 
 
-#def translatorsearch1(query):
- #   translator = Translator()
-  #  if ('\u0600' <= query <= '\u06FF' or
-   #         '\u0750' <= query <= '\u077F' or
-    #        '\u08A0' <= query <= '\u08FF' or
-     #       '\uFB50' <= query <= '\uFDFF' or
-       #     '\uFE70' <= query <= '\uFEFF' or
-        #    '\U00010E60' <= query <= '\U00010E7F' or
-         #   '\U0001EE00' <= query <= '\U0001EEFF'):
-        #res = translator.translate(query)
-        #result = res.text
-        # print('yes')
+def translatorsearch1(query):
+    translator = Translator()
+    if ('\u0600' <= query <= '\u06FF' or
+            '\u0750' <= query <= '\u077F' or
+            '\u08A0' <= query <= '\u08FF' or
+            '\uFB50' <= query <= '\uFDFF' or
+            '\uFE70' <= query <= '\uFEFF' or
+            '\U00010E60' <= query <= '\U00010E7F' or
+            '\U0001EE00' <= query <= '\U0001EEFF'):
+        res = translator.translate(query)
+        result = res.text
+         #print('yes')
+    else:
+        result = query
 
-    #else:
-     #   result = query
-
-   # return result
+    return result
 
 
 def finallsearch(query):
-    loaded_model = pickle.load(open('finalized_model.sav', 'rb'))
-    print((loaded_model))
-    #resfinal = translatorsearch1(query)
-    #model = SentenceTransformer('msmarco-distilbert-base-dot-prod-v3')
-    #index = faiss.deserialize_index(np.load("test.npy"))
-    #print(index)
-    #results = search(resfinal, top_k=5, index=index, model=model)
+    #loaded_model = pickle.load(open('finalized_model.sav', 'rb'))
+    #print((loaded_model))
+    resfinal = translatorsearch1(query)
+    model = SentenceTransformer('msmarco-distilbert-base-dot-prod-v3')
+    index = faiss.deserialize_index(np.load("test.npy"))
+    print(index)
+    results = search(resfinal, top_k=5, index=index, model=model)
     #ranked_results_bert = []
     #ref = [resfinal]
     #for cand in results:
      #   P, R, F1 = score([cand['Plot']], ref, lang='en')
        # ranked_results_bert.append({'Title': cand['Title'], 'Score': F1.numpy()[0]})
 
-    return 'ok'
+    return results
 
 
 class searchApi(APIView):
@@ -89,6 +88,6 @@ class searchApi(APIView):
         #print(movies)
         ranked_results = finallsearch(pk)
         #ranked_results_bert = sorted(ranked_results, key=lambda x: x['Score'], reverse=True)
-        #Maxfilm = list(ranked_results_bert)
-        #newMax = json.dumps(Maxfilm)
-        return Response(ranked_results)
+        Maxfilm = list(ranked_results)
+        newMax = json.dumps(Maxfilm)
+        return Response(newMax)
