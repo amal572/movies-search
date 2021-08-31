@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     'search',
     'origin',
     'categoriesfilm',
-    'Recommender',
+    'Recomender',
     'corsheaders',
     'background_task',
 ]
