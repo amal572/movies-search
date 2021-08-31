@@ -94,6 +94,8 @@ class searchApi(APIView):
         model = SentenceTransformer('msmarco-distilbert-base-dot-prod-v3')
         print(3)
         data = np.load("test.npy")
+        print(data.shape)
+        n, = data.shape
         print(5)
         print(data)
         index = faiss.deserialize_index(data)
