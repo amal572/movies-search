@@ -66,23 +66,26 @@ def translatorsearch1(query):
 
 
 def finallsearch(query):
-    resfinal = translatorsearch1(query)
+    #resfinal = translatorsearch1(query)
     model = SentenceTransformer('msmarco-distilbert-base-dot-prod-v3')
-    index = faiss.deserialize_index(np.load("test.npy"))
-    results = search(resfinal, top_k=5, index=index, model=model)
-    ranked_results_bert = []
-    ref = [resfinal]
-    for cand in results:
-        P, R, F1 = score([cand['Plot']], ref, lang='en')
-        ranked_results_bert.append({'Title': cand['Title'], 'Score': F1.numpy()[0]})
+    #index = faiss.deserialize_index(np.load("test.npy"))
+    #print(index)
+    #results = search(resfinal, top_k=5, index=index, model=model)
+    #ranked_results_bert = []
+    #ref = [resfinal]
+    #for cand in results:
+     #   P, R, F1 = score([cand['Plot']], ref, lang='en')
+       # ranked_results_bert.append({'Title': cand['Title'], 'Score': F1.numpy()[0]})
 
-    return ranked_results_bert
+    return "ok"
 
 
 class searchApi(APIView):
     def get(self, request,pk):
+        movies = pd.read_csv('example_file.csv')
+        print(movies)
         ranked_results = finallsearch(pk)
-        ranked_results_bert = sorted(ranked_results, key=lambda x: x['Score'], reverse=True)
-        Maxfilm = list(ranked_results_bert)
-        newMax = json.dumps(Maxfilm)
-        return Response(json.loads(newMax))
+        #ranked_results_bert = sorted(ranked_results, key=lambda x: x['Score'], reverse=True)
+        #Maxfilm = list(ranked_results_bert)
+        #newMax = json.dumps(Maxfilm)
+        return Response('ok')
