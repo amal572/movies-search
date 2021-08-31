@@ -99,7 +99,7 @@ class searchApi(APIView):
         index = faiss.deserialize_index(data)
         print(5)
         print(index)
-        results = search(resfinal, top_k=5, index=index, model=model)
+        results = search(resfinal, top_k=1, index=index, model=model)
         print(6)
         #ranked_results_bert = sorted(ranked_results, key=lambda x: x['Score'], reverse=True)
         Maxfilm = list(results)
