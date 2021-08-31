@@ -34,5 +34,5 @@ urlpatterns = [
     path('actorfilm/', include('actorfilm.url')),
     path('origin/', include('origin.url')),
     path('categoriesfilm/', include('categoriesfilm.url')),
-    path('Recomender/', include('Recommender.url')),
+    path('Recomender/', include('Recomender.url')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
