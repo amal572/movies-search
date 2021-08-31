@@ -111,7 +111,7 @@ def addData():
             re = review_of_film(users=User.objects.get(id=idd),films=film.objects.get(id=filmId),precent_rate=data['rating'][i])
             re.save()
         i=i+1
-    return Response("here")
+    return Response({"po":"here"})
         
 class AddToDatabase(APIView):
     def post(self, request):
