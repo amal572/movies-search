@@ -80,8 +80,8 @@ def finallsearch(query):
 
 
 class searchApi(APIView):
-    def get(self, request):
-        ranked_results = finallsearch(request.data["query"])
+    def get(self, request,pk):
+        ranked_results = finallsearch(pk)
         ranked_results_bert = sorted(ranked_results, key=lambda x: x['Score'], reverse=True)
         Maxfilm = list(ranked_results_bert)
         newMax = json.dumps(Maxfilm)
