@@ -111,12 +111,13 @@ def addData():
             re = review_of_film(users=User.objects.get(id=idd),films=film.objects.get(id=filmId),precent_rate=data['rating'][i])
             re.save()
         i=i+1
+    return "here"
         
 class AddToDatabase(APIView):
     def post(self, request):
         try:
-            addData()
-            return Response('ok')
+            o=addData()
+            return Response(o)
         except ObjectDoesNotExist as e:
             return Response({'error': str(e)}, safe=False, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
