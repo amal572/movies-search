@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'search',
     'origin',
     'categoriesfilm',
+    'Recommender',
     'corsheaders',
 ]
 
