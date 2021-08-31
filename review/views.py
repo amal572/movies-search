@@ -109,8 +109,11 @@ class AddToDatabase(APIView):
                 filmId = film.objects.filter(title=data['film']).values_list('id', flat=True)[0]
                 re = review_of_film(users=User.objects.get(id=idd),films=film.objects.get(id=filmId),precent_rate=data['precent_rate'])
                 re.save()
-           
-            return Response('ok')
+                return Response('ok')
+            else:
+                return Response('no film')
+            
+            return Response('any thing')
         except ObjectDoesNotExist as e:
             return Response({'error': str(e)}, safe=False, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
