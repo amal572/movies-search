@@ -94,20 +94,21 @@ class AddToDatabase(APIView):
     def post(self, request):
         try:
             data=request.data
-            idd=request.data['user']
-            names = random.choice(["abd", "silvi", "sherbel","amal","baraa"])
-            
-            if User.objects.filter(id=idd).count()==0:
-                username = names + str(idd)
-                email = username + str(idd) + '@gmail.com'
-                password = '1234'
-                user = User(id=idd,username=username,email=email)
-                user.set_password(password)
-                user.save()
-            
-            filmId = film.objects.filter(title=data['film']).values_list('id', flat=True)[0]
-            re = review_of_film(users=User.objects.get(id=idd),films=film.objects.get(id=filmId),precent_rate=data['precent_rate'])
-            re.save()
+            if film.objects.filter(title=data['film']).count():
+                idd=request.data['user']
+                names = random.choice(["abd", "silvi", "sherbel","amal","baraa"])
+                
+                if User.objects.filter(id=idd).count()==0:
+                    username = names + str(idd)
+                    email = username + str(idd) + '@gmail.com'
+                    password = '1234'
+                    user = User(id=idd,username=username,email=email)
+                    user.set_password(password)
+                    user.save()
+                
+                filmId = film.objects.filter(title=data['film']).values_list('id', flat=True)[0]
+                re = review_of_film(users=User.objects.get(id=idd),films=film.objects.get(id=filmId),precent_rate=data['precent_rate'])
+                re.save()
            
             return Response('ok')
         except ObjectDoesNotExist as e:
