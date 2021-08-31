@@ -6,7 +6,7 @@ from .models import *
 from film.models import review_of_film,film
 #from user.models import 
 # Create your views here.
-import pandas as pd
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated,IsAdminUser
@@ -14,8 +14,6 @@ from rest_framework import status
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
-from background_task import background
-
 import random
 
 class ReviewView(APIView):
@@ -89,15 +87,14 @@ class ReviewDelete(APIView):
             return Response({'error': str(e)}, safe=False, status=status.HTTP_404_NOT_FOUND)
         except Exception:
             return Response({'error': 'Something went wrong'}, safe=False, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-#
-@background(schedule=5)
-def addData():
-    movies = pd.read_csv('example_file1.csv')
-    df = pd.DataFrame(movies)
-    i=0
-    while i<100:
-        if not pd.isna(df['rating'][i]):
-            idd=df["userId"][i]
+
+
+
+class AddToDatabase(APIView):
+    def post(self, request):
+        try:
+            data=request.data
+            idd=request.data['user']
             names = random.choice(["abd", "silvi", "sherbel","amal","baraa"])
             
             if User.objects.filter(id=idd).count()==0:
@@ -107,17 +104,12 @@ def addData():
                 user = User(id=idd,username=username,email=email)
                 user.set_password(password)
                 user.save()
-            filmId = film.objects.filter(title=df['Title'][i]).values_list('id', flat=True)[0]
-            re = review_of_film(users=User.objects.get(id=idd),films=film.objects.get(id=filmId),precent_rate=data['rating'][i])
+            
+            filmId = film.objects.filter(title=data['film']).values_list('id', flat=True)[0]
+            re = review_of_film(users=User.objects.get(id=idd),films=film.objects.get(id=filmId),precent_rate=data['precent_rate'])
             re.save()
-        i=i+1
-    return Response({"po":"here"})
-        
-class AddToDatabase(APIView):
-    def post(self, request):
-        try:
-            o=addData()
-            return Response(o)
+           
+            return Response('ok')
         except ObjectDoesNotExist as e:
             return Response({'error': str(e)}, safe=False, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
