@@ -326,7 +326,6 @@ class expertMovie(APIView):
                 values = []
                 for item in std: 
                     item = unicodedata.normalize('NFKD', str(item)).encode('ascii', 'ignore')
-                    print(str(item))
                     values.append(item)
                 writer.writerow(values)
         return Response('finall')
@@ -342,6 +341,9 @@ class expertRate(APIView):
             writer.writerow(['userId', 'movieId', 'rating'])
             studs = rate.values_list('users', 'films', 'precent_rate')
             for std in studs:
-                print([str(s, 'utf-8') for s in std])
-                writer.writerow([str(s, 'utf-8') for s in std])
+                values = []
+                for item in std: 
+                    item = unicodedata.normalize('NFKD', str(item)).encode('ascii', 'ignore')
+                    values.append(item)
+                writer.writerow(values)
         return Response('final')
