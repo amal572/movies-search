@@ -133,6 +133,7 @@ class searchApi(APIView):
             serializers = FilmSerializer(movies, many=True)
             finalres.append(serializers)
 
+        print(finalres)
         print(type(finalres))
 
         # print(7)
