@@ -102,7 +102,7 @@ class searchApi(APIView):
         index = faiss.deserialize_index(np.load("test.npy"))
 
         query_vector = model.encode([resfinal])
-        top_k = index.search(query_vector, 10)
+        top_k = index.search(query_vector, 50)
         top_k_ids = top_k[1].tolist()[0]
         top_k_ids = list(np.unique(top_k_ids))
         results = [fetch_movie_info(idx) for idx in top_k_ids]
