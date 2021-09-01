@@ -327,6 +327,7 @@ class expertMovie(APIView):
                 for item in std: 
                     item = unicodedata.normalize('NFKD', str(item)).encode('ascii', 'ignore')
                     values.append(item)
+                print(values)
                 writer.writerow(values)
         return Response('finall')
 
