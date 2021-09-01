@@ -303,6 +303,7 @@ class expertRate(APIView):
             writer.writerow(['userId', 'movieId', 'rating'])
             studs = rate.values_list('users', 'films', 'precent_rate')
             for std in studs:
+                print([s for s in std])
                 writer.writerow([str(s, 'utf-8') for s in std])
         return Response('final')
 
