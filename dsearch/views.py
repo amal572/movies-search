@@ -90,6 +90,8 @@ def finallsearch(query):
 
 class searchApi(APIView):
     def get(self, request):
+        a = u'\xa1'
+        print(str(a))
         query = "فيلم أكشن قائم على الذكاء الاصطناعي"
         #movies = pd.read_csv('example_file.csv')
         #print(movies)
