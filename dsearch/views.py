@@ -79,7 +79,7 @@ def finallsearch(query):
     print(index)
     t = time.time()
     query_vector = model.encode([query])
-    top_k = index.search(query_vector, 10)
+    top_k = index.search(query_vector, 50)
     top_k_ids = top_k[0].tolist()[0]
     top_k_ids = list(np.unique(top_k_ids))
     results = [fetch_movie_info(idx) for idx in top_k_ids]
