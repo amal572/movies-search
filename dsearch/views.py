@@ -35,7 +35,7 @@ def fetch_movie_info(dataframe_idx):
     meta_dict = {}
     meta_dict['Title'] = info['Title']
     meta_dict['Plot'] = info['Plot'][:500]
-    return info
+    return meta_dict
 
 def search(query, top_k, index, model):
     t = time.time()
@@ -90,6 +90,7 @@ def finallsearch(query):
 
 class searchApi(APIView):
     def get(self, request):
+        print(str(a))
         query = "فيلم أكشن قائم على الذكاء الاصطناعي"
         #movies = pd.read_csv('example_file.csv')
         #print(movies)
@@ -121,6 +122,5 @@ class searchApi(APIView):
         print(Maxfilm)
         newMax = json.dumps(Maxfilm)
         print(8)
-        print(type(newMax))
         print(newMax)
-        return Response(json.loads(newMax))
+        return Response(newMax)
