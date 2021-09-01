@@ -324,7 +324,7 @@ class expertMovie(APIView):
             studs = movies.values_list('id', 'title', 'description', 'rate')
             for std in studs:
                 for item in std: 
-                    item = unicodedata.normalize('NFKD', item).encode('ascii', 'ignore')
+                    item = unicodedata.normalize('NFKD', str(item)).encode('ascii', 'ignore')
                     print(str(item))
                 print(type(std))
                 print([s for s in std])
