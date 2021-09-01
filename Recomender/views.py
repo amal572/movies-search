@@ -21,7 +21,7 @@ from film.models import *
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework import status
 from django.core.exceptions import ObjectDoesNotExist
-
+from django.utils.encoding import smart_str, smart_unicode
 
 def getmovie():
     movies = pd.read_csv('movies.csv')
@@ -324,8 +324,8 @@ class expertMovie(APIView):
             studs = movies.values_list('id', 'title', 'description', 'rate')
             for std in studs:
                 for item in std: 
-                    print(str(item))
                     print(type(item))
+                    print(smart_str(item))
                 print(type(std))
                 print([s for s in std])
                 writer.writerow(str(s) for s in std)
