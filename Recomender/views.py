@@ -324,7 +324,6 @@ class expertMovie(APIView):
             studs = movies.values_list('id', 'title', 'description', 'rate')
             for std in studs:
                 for item in std: 
-                    print(item)
                     print(str(item))
                     print(type(item))
                 print(type(std))
