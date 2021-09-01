@@ -31,10 +31,10 @@ def getmoviedef():
 
 def fetch_movie_info(dataframe_idx):
     df = getmoviedef()
-    info = df.iloc[dataframe_idx]
+    info =df.iloc[dataframe_idx]
     meta_dict = {}
-    meta_dict['Title'] = info['Title']
-    meta_dict['Plot'] = info['Plot'][:500]
+    meta_dict['movieId'] = info['movieId']
+    #meta_dict['Plot'] = info['Plot'][:500]
     return meta_dict
 
 def search(query, top_k, index, model):
@@ -78,7 +78,7 @@ def finallsearch(query):
     top_k_ids = top_k[0].tolist()[0]
     top_k_ids = list(np.unique(top_k_ids))
     results = [fetch_movie_info(idx) for idx in top_k_ids]
-    #results = search(resfinal, top_k=5, index=index, model=model)
+    # results = search(resfinal, top_k=5, index=index, model=model)
     #ranked_results_bert = []
     #ref = [resfinal]
     #for cand in results:
@@ -112,6 +112,8 @@ class searchApi(APIView):
         print(top_k_ids)
         results = [fetch_movie_info(idx) for idx in top_k_ids]
         print(6)
+        results = search(resfinal, top_k=15, index=index, model=model)
+        print(6.1)
         #results = search(resfinal, top_k=5, index=index, model=model)
         #ranked_results_bert = sorted(ranked_results, key=lambda x: x['Score'], reverse=True)
         print(type(results))
