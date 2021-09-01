@@ -3,7 +3,7 @@ from .views import trainingRecomender, getRecomender, getMaxFilm,traningCollabor
 
 urlpatterns = [
    path('train/', trainingRecomender.as_view()),
-   path('view/<str:pk>/', getRecomender.as_view()),
+   path('view/', getRecomender.as_view()),
    path('MaxFilm/', getMaxFilm.as_view()),
    path('traningCollaborative1', traningCollaborative1.as_view()),
    path('traningCollaborative2', traningCollaborative2.as_view()),
