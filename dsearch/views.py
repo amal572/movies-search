@@ -103,6 +103,7 @@ class searchApi(APIView):
         query_vector = model.encode([query])
         print(2)
         top_k = index.search(query_vector, 4)
+        print(top_k)
         print(3)
         top_k_ids = top_k[0].tolist()[0]
         print(4)
