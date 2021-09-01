@@ -21,7 +21,7 @@ from film.models import *
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework import status
 from django.core.exceptions import ObjectDoesNotExist
-from django.utils.encoding import smart_str, smart_unicode
+from django.utils.encoding import smart_str
 
 def getmovie():
     movies = pd.read_csv('movies.csv')
