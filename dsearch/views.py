@@ -72,7 +72,13 @@ def finallsearch(query):
     model = SentenceTransformer('msmarco-distilbert-base-dot-prod-v3')
     index = faiss.deserialize_index(np.load("test.npy"))
     print(index)
-    results = search(resfinal, top_k=5, index=index, model=model)
+    t = time.time()
+    query_vector = model.encode([query])
+    top_k = index.search(query_vector, 4)
+    top_k_ids = top_k[0].tolist()[0]
+    top_k_ids = list(np.unique(top_k_ids))
+    results = [fetch_movie_info(idx) for idx in top_k_ids]
+    #results = search(resfinal, top_k=5, index=index, model=model)
     #ranked_results_bert = []
     #ref = [resfinal]
     #for cand in results:
@@ -88,22 +94,18 @@ class searchApi(APIView):
         #movies = pd.read_csv('example_file.csv')
         #print(movies)
         #ranked_results = finallsearch('فيلم أكشن قائم على الذكاء الاصطناعي')
-        print(1)
         resfinal = translatorsearch1(query)
-        print(2)
         model = SentenceTransformer('msmarco-distilbert-base-dot-prod-v3')
-        print(3)
-        data = np.load("test.npy")
-        print(4)
-        print(data)
-        index = faiss.deserialize_index(data)
-        print(5)
+        index = faiss.deserialize_index(np.load("data.npy"))
         print(index)
-        results = search(resfinal, top_k=1, index=index, model=model)
-        print(6)
+        t = time.time()
+        query_vector = model.encode([query])
+        top_k = index.search(query_vector, 4)
+        top_k_ids = top_k[0].tolist()[0]
+        top_k_ids = list(np.unique(top_k_ids))
+        results = [fetch_movie_info(idx) for idx in top_k_ids]
+        #results = search(resfinal, top_k=5, index=index, model=model)
         #ranked_results_bert = sorted(ranked_results, key=lambda x: x['Score'], reverse=True)
         Maxfilm = list(results)
-        print(7)
         newMax = json.dumps(Maxfilm)
-        print(8)
         return Response(newMax)
