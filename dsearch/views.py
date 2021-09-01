@@ -131,7 +131,7 @@ class searchApi(APIView):
         for x in listresult:
             movies = film.objects.filter(id=x)
             serializers = FilmSerializer(movies, many=True)
-            finalres.append(serializers.data)
+            finalres.append(serializers.data[0])
 
         print(type(finalres))
 
