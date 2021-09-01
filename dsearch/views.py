@@ -32,9 +32,9 @@ def getmoviedef():
 def fetch_movie_info(dataframe_idx):
     df = getmoviedef()
     info = df.iloc[dataframe_idx]
-    #meta_dict = {}
-    #meta_dict['Title'] = info['Title']
-    #meta_dict['Plot'] = info['Plot'][:500]
+    meta_dict = {}
+    meta_dict['Title'] = info['Title']
+    meta_dict['Plot'] = info['Plot'][:500]
     return info
 
 def search(query, top_k, index, model):
