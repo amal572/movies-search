@@ -100,7 +100,7 @@ class searchApi(APIView):
         print(index)
         t = time.time()
         print(1)
-        query_vector = model.encode([query])
+        query_vector = model.encode([resfinal])
         print(2)
         top_k = index.search(query_vector, 10)
         print(top_k)
