@@ -105,7 +105,7 @@ class searchApi(APIView):
         top_k = index.search(query_vector, 4)
         print(top_k)
         print(3)
-        top_k_ids = top_k[0].tolist()[0]
+        top_k_ids = top_k[1].tolist()[0]
         print(4)
         top_k_ids = list(np.unique(top_k_ids))
         print(5)
