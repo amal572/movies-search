@@ -96,7 +96,7 @@ class searchApi(APIView):
         #ranked_results = finallsearch('فيلم أكشن قائم على الذكاء الاصطناعي')
         resfinal = translatorsearch1(query)
         model = SentenceTransformer('msmarco-distilbert-base-dot-prod-v3')
-        index = faiss.deserialize_index(np.load("data.npy"))
+        index = faiss.deserialize_index(np.load("test.npy"))
         print(index)
         t = time.time()
         query_vector = model.encode([query])
