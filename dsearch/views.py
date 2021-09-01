@@ -108,6 +108,7 @@ class searchApi(APIView):
         print(4)
         top_k_ids = list(np.unique(top_k_ids))
         print(5)
+        print(top_k_ids)
         results = [fetch_movie_info(idx) for idx in top_k_ids]
         print(6)
         #results = search(resfinal, top_k=5, index=index, model=model)
