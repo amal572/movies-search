@@ -99,11 +99,17 @@ class searchApi(APIView):
         index = faiss.deserialize_index(np.load("test.npy"))
         print(index)
         t = time.time()
+        print(1)
         query_vector = model.encode([query])
+        print(2)
         top_k = index.search(query_vector, 4)
+        print(3)
         top_k_ids = top_k[0].tolist()[0]
+        print(4)
         top_k_ids = list(np.unique(top_k_ids))
+        print(5)
         results = [fetch_movie_info(idx) for idx in top_k_ids]
+        print(6)
         #results = search(resfinal, top_k=5, index=index, model=model)
         #ranked_results_bert = sorted(ranked_results, key=lambda x: x['Score'], reverse=True)
         Maxfilm = list(results)
