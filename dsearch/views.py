@@ -123,4 +123,4 @@ class searchApi(APIView):
         print(8)
         print(type(newMax))
         print(newMax)
-        return Response(newMax)
+        return Response(json.loads(newMax))
