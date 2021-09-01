@@ -115,5 +115,7 @@ class searchApi(APIView):
         #results = search(resfinal, top_k=5, index=index, model=model)
         #ranked_results_bert = sorted(ranked_results, key=lambda x: x['Score'], reverse=True)
         Maxfilm = list(results)
+        print(Maxfilm)
         newMax = json.dumps(Maxfilm)
+        print(newMax)
         return Response(newMax)
