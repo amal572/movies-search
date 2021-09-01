@@ -26,12 +26,12 @@ import json
 def getmoviedef():
     movies = pd.read_csv('movies.csv')
     #df2 = movies[["movieId","Release Year","Title" ,"Origin/Ethnicity" ,"Director","Cast","Genre","Plot"]]
-    df = movies[['Title','Plot']]
-    return df
+   # df = movies[['Title','Plot']]
+    return movies
 
 def fetch_movie_info(dataframe_idx):
     df = getmoviedef()
-    info =df.iloc[dataframe_idx]
+    info = df.iloc[dataframe_idx]
     meta_dict = {}
     meta_dict['movieId'] = info['movieId']
     #meta_dict['Plot'] = info['Plot'][:500]
@@ -74,7 +74,7 @@ def finallsearch(query):
     print(index)
     t = time.time()
     query_vector = model.encode([query])
-    top_k = index.search(query_vector, 4)
+    top_k = index.search(query_vector, 10)
     top_k_ids = top_k[0].tolist()[0]
     top_k_ids = list(np.unique(top_k_ids))
     results = [fetch_movie_info(idx) for idx in top_k_ids]
@@ -102,7 +102,7 @@ class searchApi(APIView):
         print(1)
         query_vector = model.encode([query])
         print(2)
-        top_k = index.search(query_vector, 4)
+        top_k = index.search(query_vector, 10)
         print(top_k)
         print(3)
         top_k_ids = top_k[1].tolist()[0]
@@ -112,7 +112,7 @@ class searchApi(APIView):
         print(top_k_ids)
         results = [fetch_movie_info(idx) for idx in top_k_ids]
         print(6)
-        results = search(resfinal, top_k=15, index=index, model=model)
+        #results = search(resfinal, top_k=15, index=index, model=model)
         print(6.1)
         #results = search(resfinal, top_k=5, index=index, model=model)
         #ranked_results_bert = sorted(ranked_results, key=lambda x: x['Score'], reverse=True)
