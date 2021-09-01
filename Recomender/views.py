@@ -324,7 +324,7 @@ class expertMovie(APIView):
             studs = movies.values_list('id', 'title', 'description', 'rate')
             for std in studs:
                 print([s for s in std])
-                writer.writerow(str(s, 'utf-8') for s in std)
+                writer.writerow(str(s) for s in std)
         return Response('finall')
 
 
