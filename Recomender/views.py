@@ -323,7 +323,7 @@ class expertMovie(APIView):
             writer.writerow(['movieId', 'Title', 'Plot', 'vote_average'])
             studs = movies.values_list('id', 'title', 'description', 'rate')
             for std in studs:
-                print([s for s in std])
+                print(str(s) for s in std)
                 writer.writerow(str(s) for s in std)
         return Response('finall')
 
